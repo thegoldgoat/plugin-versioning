@@ -1,0 +1,14 @@
+{
+  "name": "plugin-versioning",
+  "version": "0.0.1",
+  "description": "vuex-ORM plugin to add versioning to entities and single objects",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "vuex",
+    "vuex-ORM",
+    "plugin"
+  ],
+  "author": "Andrea Somaini",
+  "license": "GPL-3.0-or-later"
+}
