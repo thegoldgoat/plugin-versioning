@@ -1,5 +1,5 @@
 const defaultOptions = {
-  versionField: 'cacheVersion',
+  versionField: '$version',
 }
 
 export default {
