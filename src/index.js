@@ -1,5 +1,6 @@
 const defaultOptions = {
-  versionField: '$version',
+  versionField: 'cacheVersion',
+  database: null,
 }
 
 export default {
@@ -9,6 +10,13 @@ export default {
       ...installOptions,
     }
     const versionField = pluginOptions.versionField
+    const databaseOption = pluginOptions.database
+
+    if (!databaseOption) {
+      console.warn(
+        '[VuexORMVersioning]: missing `database` option, schema versioning not enabled'
+      )
+    }
 
     const { Model, Query } = components
 
@@ -23,8 +31,17 @@ export default {
       return Object.assign({}, existing, localFieldModel)
     }
 
-    Query.on('beforeUpdate', function (model) {
+    Query.on('beforeUpdate', function (model, _, entity) {
       model[versionField]++
+      try {
+        databaseOption.store.commit('versions/incrementVersion', entity)
+      } catch (error) {}
+    })
+
+    Query.on('beforeCreate', function (_, __, entity) {
+      try {
+        databaseOption.store.commit('versions/incrementVersion', entity)
+      } catch (error) {}
     })
   },
 }
